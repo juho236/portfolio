@@ -1,0 +1,56 @@
+body {
+    background-color: black;
+}
+#mainframe {
+    width: 1000px;
+    height: 1000px;
+    margin: auto;
+    position: relative;
+}
+#navbar {
+    display: block;
+    background-color: gray;
+}
+.tile {
+    position: absolute;
+    border: 2px inset black;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.bomb {
+    background-color: black;
+}
+.flag {
+    background-color: #FF0000;
+}
+.unknown {
+    background-color: white;
+}
+.known {
+    background-color: gray;
+}
+.color1 {
+    color: #0080FF;
+}
+.color2 {
+    color: #08AA00;
+}
+.color3 {
+    color: #FF8800;
+}
+.color4 {
+    color: #8000FF;
+}
+.color5 {
+    color: #FF0000;
+}
+.color6 {
+    color: #FF00FF;
+}
+.color7 {
+    color: #000088;
+}
+.color8 {
+    color: black;
+}
