@@ -83,6 +83,8 @@ const pages = {
         const main = document.getElementById("main")
         addH1(main,"Juhon hullu portfolio","text bold")
         addP(main,"Ihan hullu","text")
+        addH2(main,"Kuka olen?","text bold")
+        addP(main,"Olen Juho Toivola, "+Math.floor(((new Date())-(new Date(2007,9,7)))/1000/3600/24/365)+"-vuotias, ja olen kiinnostunut tietokoneista ja ohjelmoinnista.","text")
         addH2(main,"Mitäs kaikkea tällä sivulla on?","text bold")
         addP(main,"Tällä sivulla on projektit tai linkki niihin, jotka haluan näyttää. Kaikki jutut pitäisi näkyä sivun oikeassa reunassa. Voit myös kirjoittaa osoitekenttään sivun nimen, ja mennä piilotetuille sivuille jos löydät oikean koodin! Ei saa sitten katsoa javascriptistä mitä koodeja on olemassa, koska se olisi huijaamista :).","text")
         addH2(main,"Muutama linkki","text")
