@@ -25,6 +25,12 @@ const addLink = (parent,text,cl,ref) => {
     a.href = ref
     return a 
 }
+const addOtherLink = (parent,text,cl,ref) => {
+    const a = addElement("a",parent,cl,text)
+    a.target = "_blank"
+    a.href = ref
+    return a 
+}
 const addH1 = (parent,text,cl) => {
     return addElement("h1",parent,cl,text)
 }
@@ -68,13 +74,14 @@ const pages = {
     }},Minesweeper:{Call:()=>{
         const main = document.getElementById("main")
         const iframe = addElement("iframe",main,"gameframe","")
-        iframe.src = "minesweeper/index.html"
+        iframe.src = "https://juho236.github.io/minesweeperclone/code/"
         addH1(main,"Koodi","text bold")
-        addOtherLink(main,"Githubin lähdekoodi")
+        addOtherLink(main,"Githubin lähdekoodi","text bold","https://github.com/juho236/minesweeperclone")
     }},Tetris:{Call:()=>{
         const main = document.getElementById("main")
         const iframe = addElement("iframe",main,"gameframe","")
-        iframe.src = "tetris/index.html"
+        iframe.src = "https://juho236.github.io/tetrisclone/code/"
+        addOtherLink(main,"Githubin lähdekoodi","text bold","https://github.com/juho236/tetrisclone")
     }},TransitionTest:{Call:()=>{
         const main = document.getElementById("main")
         addButton(main,"Default Transition","text button",()=>{
@@ -93,6 +100,7 @@ const pages = {
             update("TransitionTest","Rotate")
         })
         addButton(main,"Star effect (never ends!!!)","text button",()=>{
+            document.body.requestFullscreen()
             update("TransitionTest","star")
         })
         addButton(main,"Special Transition (hash change)","text button",()=>{
@@ -349,36 +357,11 @@ const update = (newId,transitionId) => {
         transitionId = "Default"
     }
     const main = document.getElementById("main")
-    const nav = document.getElementById("nav")
-    const header = document.getElementById("header")
     const cont = () => {
         main.innerHTML = ""
         const list = pages[id]
         list.Call()
-        const createScroll = (target) => {
-            target.style.top = "0px"
-            let current = 0
-            let targetPos = 0
-            let int = 0
-            target.onwheel = () => {
-                const deltaY = -event.deltaY
-                targetPos = Math.max(Math.min(0,targetPos+deltaY),-(target.offsetHeight-window.innerHeight+header.offsetHeight+16))
-                window.clearInterval(int)
-                int = window.setInterval(()=>{
-                    const diff = targetPos-current
-                    if (Math.abs(diff)<1) {
-                        window.clearInterval(int)
-                    }
-                    current = current+diff/16
-                    target.style.top = current+"px"
-                },1)
-            }
-        }
-        createScroll(main)
-        createScroll(nav)
     }
-    main.onwheel = undefined
-    nav.onwheel = undefined
     if (newId) {
         window.onhashchange = undefined
         active = false
