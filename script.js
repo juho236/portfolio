@@ -19,6 +19,9 @@ const addButton = (parent,text,cl,onclickevent) => {
 }
 const addLink = (parent,text,cl,ref) => {
     const a = addElement("a",parent,cl,text)
+    a.onclick = () => {
+        def = "Default"
+    }
     a.href = ref
     return a 
 }
@@ -33,6 +36,11 @@ const addP = (parent,text,cl) => {
 }
 const addDiv = (parent,cl) => {
     return addElement("div",parent,cl,"")
+}
+const addImg = (parent,cl,src) => {
+    const img = addElement("img",parent,cl,"")
+    img.src = (src || "")
+    return img
 }
 
 const createPopup = (width,height,popupcreationcall) => {
@@ -65,7 +73,191 @@ const pages = {
         const main = document.getElementById("main")
         const iframe = addElement("iframe",main,"gameframe","")
         iframe.src = "tetris/index.html"
+    }},TransitionTest:{Call:()=>{
+        const main = document.getElementById("main")
+        addButton(main,"Default Transition","text button",()=>{
+            update("TransitionTest","Default")
+        })
+        addButton(main,"Reversed Transition","text button",()=>{
+            update("TransitionTest","Reverse")
+        })
+        addButton(main,"Fade","text button",()=>{
+            update("TransitionTest","Fade")
+        })
+        addButton(main,"Spin clockwise","text button",()=>{
+            update("TransitionTest","Spin")
+        })
+        addButton(main,"Skewed Transition","text button",()=>{
+            update("TransitionTest","Rotate")
+        })
+        addButton(main,"Star effect (never ends!!!)","text button",()=>{
+            update("TransitionTest","star")
+        })
+        addButton(main,"Special Transition (hash change)","text button",()=>{
+            update("TransitionTest","Special")
+        })
     }}
+}
+
+const easingStyles = {
+    In:{
+        Sine:(alpha)=>{
+            return Math.sin(alpha*Math.PI/2)
+        }
+    },Out:{
+        Sine:(alpha)=>{
+            return 1-Math.sin((1-alpha)*Math.PI/2)
+        }
+    },InOut:{
+        Sine:(alpha)=>{
+            return Math.sin((alpha-0.5)*Math.PI)/2+0.5
+        }
+    },
+}
+
+const transitions = {
+    Default:{
+        Start:(transitionTarget,transition)=>{
+            transitionTarget.style.right = "0%"
+            transition.style.left = "100%"
+        },InFrames:30,In:(alpha,transitionTarget,transition)=>{
+            transitionTarget.style.right = (alpha*100)+"%"
+            transition.style.left = ((1-alpha)*100)+"%"
+        },Timeout:500,OutFrames:30,Out:(alpha,transitionTarget,transition)=>{
+            transitionTarget.style.right = (alpha*100-100)+"%"
+            transition.style.left = (-alpha*100)+"%"
+        },Reset:(transitionTarget,transition)=>{
+            transitionTarget.style.right = ""
+            transition.style.left = ""
+        }
+    },Reverse:{
+        Start:(transitionTarget,transition)=>{
+            transitionTarget.style.left = "0%"
+            transition.style.right = "100%"
+        },InFrames:30,In:(alpha,transitionTarget,transition)=>{
+            transitionTarget.style.left = (alpha*100)+"%"
+            transition.style.right = ((1-alpha)*100)+"%"
+        },Timeout:500,OutFrames:30,Out:(alpha,transitionTarget,transition)=>{
+            transitionTarget.style.left = (alpha*100-100)+"%"
+            transition.style.right = (-alpha*100)+"%"
+        },Reset:(transitionTarget,transition)=>{
+            transitionTarget.style.left = ""
+            transition.style.right = ""
+        }
+    },Fade:{
+        Start:(transitionTarget,transition)=>{
+            transition.style.opacity = 0
+        },InFrames:60,In:(alpha,transitionTarget,transition)=>{
+            transition.style.opacity = alpha
+        },Timeout:500,OutFrames:60,Out:(alpha,transitionTarget,transition)=>{
+            transition.style.opacity = 1-alpha
+        },Reset:(transitionTarget,transition)=>{
+            transitionTarget.style.opacity = ""
+            transition.style.opacity = ""
+        }
+    },Spin:{
+        Start:(transitionTarget,transition)=>{
+            transition.style.opacity = 0
+            transition.style.rotate = "-180deg"
+        },InFrames:60,In:(alpha,transitionTarget,transition)=>{
+            transition.style.opacity = alpha
+            transitionTarget.style.rotate = (alpha*180)+"deg"
+            transition.style.rotate = (alpha*180-180)+"deg"
+        },Timeout:500,OutFrames:60,Out:(alpha,transitionTarget,transition)=>{
+            transition.style.opacity = 1-alpha
+            transitionTarget.style.rotate = (alpha*180-180)+"deg"
+            transition.style.rotate = (alpha*180)+"deg"
+        },Reset:(transitionTarget,transition)=>{
+            transition.style.opacity = ""
+            transitionTarget.style.rotate = ""
+            transition.style.rotate = ""
+        },ActivateBackground:true
+    },Rotate:{
+        Start:(transitionTarget,transition)=>{
+            transition.style.transform = "rotateX(-90deg)"
+        },InFrames:60,EaseIn:easingStyles.InOut.Sine,In:(alpha,transitionTarget,transition)=>{
+            transitionTarget.style.transform = "rotateX("+(Math.min(alpha*180,90))+"deg)"
+            transition.style.transform = "rotateX("+(Math.max(-(1-alpha)*180,-90))+"deg)"
+        },Timeout:0,OutFrames:60,EaseOut:easingStyles.InOut.Sine,Out:(alpha,transitionTarget,transition)=>{
+            transitionTarget.style.transform = "rotateX("+(Math.max(-(1-alpha)*180,-90))+"deg)"
+            transition.style.transform = "rotateX("+(Math.min(alpha*180,90))+"deg)"
+        },Reset:(transitionTarget,transition)=>{
+            transitionTarget.style.transform = ""
+            transition.style.transform = ""
+        },ActivateBackground:true
+    },star:{
+        Start:(transitionTarget,transition)=>{
+            transition.style.opacity = 0
+            transitionTarget.style.opacity = 1
+        },InFrames:360,In:(alpha,transitionTarget,transition)=>{
+            transitionTarget.style.opacity = 1-alpha
+        },ActivateBackground:true,Timeout:100000000000000
+    },Special:{
+        Start:(transitionTarget,transition)=>{
+            transitionTarget.style.left = "0%"
+            transition.style.right = "100%"
+            transition.style.top = "30%"
+            transition.style.transform = "scale(0.5) skewY(-10deg)"
+        },InFrames:120,In:(alpha,transitionTarget,transition)=>{
+            const alpha1 = easingStyles.InOut.Sine(Math.min(alpha*4,1))
+            const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-1,0),1))
+            const alpha3 = easingStyles.InOut.Sine(Math.max(alpha*2,1)-1)
+            transitionTarget.style.transform = "scale("+(1-alpha1/2)+") skewY("+(-alpha2*10)+"deg)"
+            transitionTarget.style.left = (alpha3*100)+"%"
+            transitionTarget.style.top = (alpha3*-30)+"%"
+            transition.style.right = ((1-alpha3)*100)+"%"
+            transition.style.top = ((1-alpha3)*30)+"%"
+        },Timeout:500,OutFrames:120,Out:(alpha,transitionTarget,transition)=>{
+            const alpha1 = easingStyles.InOut.Sine(Math.min(alpha*2,1))
+            const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-2,0),1))
+            const alpha3 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-3,0),1))
+            transitionTarget.style.transform = "scale("+(0.5+alpha3/2)+") skewY("+(alpha2*10-10)+"deg)"
+            transitionTarget.style.left = (alpha1*100-100)+"%"
+            transitionTarget.style.top = (alpha1*-30+30)+"%"
+            transition.style.right = (alpha1*-100)+"%"
+            transition.style.top = (alpha1*-30)+"%"
+        },Reset:(transitionTarget,transition)=>{
+            transitionTarget.style.left = ""
+            transition.style.right = ""
+        },ActivateBackground:true
+    }
+}
+
+let frames = 0
+let backgroundInt = 0
+
+const effectFrame = addDiv(document.body,"starframe")
+const layers = [
+    {Scale:100,Multiplier:0.1,Opacity:0.25},
+    {Scale:200,Multiplier:0.2,Opacity:0.3},
+    {Scale:300,Multiplier:0.3,Opacity:0.45},
+    {Scale:450,Multiplier:0.45,Opacity:0.6},
+    {Scale:600,Multiplier:0.6,Opacity:0.7},
+    {Scale:800,Multiplier:0.8,Opacity:0.9},
+    {Scale:1000,Multiplier:1,Opacity:1},
+]
+for (let i=0;i<layers.length;i++) {
+    const l = layers[i]
+    const scale = l.Scale
+    const el = addDiv(effectFrame,"starfield")
+    el.style.backgroundSize = (scale)+"px "+(scale)+"px"
+    el.style.opacity = l.Opacity
+    layers[i] = {Ref:el,Scale:scale,Multiplier:l.Multiplier}
+}
+
+const activateBackground = () => {
+    backgroundInt = window.setInterval(()=>{
+        frames++
+        for (let i=0;i<layers.length;i++) {
+            const l = layers[i]
+            const el = l.Ref
+            el.style.backgroundPosition = (frames*l.Multiplier)+"px"
+        }
+    },1)
+}
+const deActivateBackground = () => {
+    frames = 0
+    window.clearInterval(backgroundInt)
 }
 
 const getId = () => {
@@ -115,8 +307,12 @@ const run = (call,frames,id,endcall) => {
     runIds[id] = int
 }
 
-
-const update = (newId) => {
+let def = "Special"
+const update = (newId,transitionId) => {
+    def = "Special"
+    if (!transitionId) {
+        transitionId = "Default"
+    }
     const main = document.getElementById("main")
     const nav = document.getElementById("nav")
     const header = document.getElementById("header")
@@ -149,13 +345,9 @@ const update = (newId) => {
     main.onwheel = undefined
     nav.onwheel = undefined
     if (newId) {
+        window.onhashchange = undefined
         active = false
         let timeout
-        window.onhashchange = () => {
-            window.clearInterval(runIds.cooltransition)
-            window.clearTimeout(timeout)
-            update(getId())
-        }
         let str = ""
         for (let i=0;i<document.URL.length;i++) {
             const char = document.URL.charAt(i)
@@ -165,32 +357,73 @@ const update = (newId) => {
                 str = str + char
             }
         }
+
         id = newId
-        document.URL = str
+        location.href = str+"#"+newId
         const transitionTarget = document.getElementById("transitiontarget")
         const transition = document.getElementById("transition")
+    
 
+        window.onhashchange = () => {
+            window.clearInterval(runIds.cooltransition)
+            window.clearTimeout(timeout)
+            update(getId(),def)
+        }
+
+
+        const transIndex = transitions[transitionId]
+
+        transition.style.display = "block"
+
+        transIndex.Start(transitionTarget,transition)
+        const easeIn = function(){
+            if (transIndex.EaseIn) {
+                return transIndex.EaseIn
+            } else {
+                return (alpha)=>{
+                    return alpha
+                }
+            }
+        }()
+        const easeOut = function(){
+            if (transIndex.EaseOut) {
+                return transIndex.EaseOut
+            } else {
+                return (alpha)=>{
+                    return alpha
+                }
+            }
+        }()
+        if (transIndex.ActivateBackground) {
+            activateBackground()
+        }
         run((alpha)=>{
-            transitionTarget.style.right = (alpha*100)+"%"
-            transition.style.left = ((1-alpha)*100)+"%"
-        },30,"cooltransition",()=>{
-            timeout = window.setTimeout(()=>{
-                document.URL = str+newId
+            transIndex.In(easeIn(alpha),transitionTarget,transition)
+        },transIndex.InFrames,"cooltransition",()=>{
+            const c = () => {
                 window.onhashchange = () => {
-                    update(getId())
+                    update(getId(),def)
                 }
                 run((alpha)=>{
-                    transitionTarget.style.right = (alpha*100-100)+"%"
-                    transition.style.left = (-alpha*100)+"%"
-                },30,"cooltransition",()=>{
+                    transIndex.Out(easeOut(alpha),transitionTarget,transition)
+                },transIndex.OutFrames,"cooltransition",()=>{
+                    deActivateBackground()
                     active = true
+                    transition.style.display = "none"
+                    transIndex.Reset(transitionTarget,transition)
                 })
-            },500)
+            }
+            if (transIndex.Timeout) {
+                timeout = window.setTimeout(c,transIndex.Timeout)
+            } else {
+                c()
+            }
+            
             cont()
         })
     } else {
         window.onhashchange = () => {
-            update(getId())
+            update(getId(),def)
         }
         cont()
     }
@@ -198,6 +431,12 @@ const update = (newId) => {
 
 update()
 
+const headerButtons = [
+    {Position:"left",Type:"Icon",Source:"noise.png"},
+    {Position:"left",Type:"Text",Text:"Kuva ja teksti vasemmalla"},
+    {Position:"right",Type:"Text",Text:"Teksti oikealla"},
+    {Position:"right",Type:"Link",Text:"Linkki oikealla siirtymätestiin",Target:"#TransitionTest"}
+]
 
 const navButtons = [
     {Title:"Kotisivu",Description:"Takaisin kotisivulle",ButtonType:"popup",ButtonText:"Mene",PopupQuestion:"Haluatko takaisin kotisivulle?",PopupTarget:"Default"},
@@ -225,4 +464,31 @@ for (let i=0;i<navButtons.length;i++) {
             }
         }
     })
+}
+
+const header = document.getElementById("header")
+for (let i=0;i<headerButtons.length;i++) {
+    const list = headerButtons[i]
+    const div = addDiv(header,"headeritem")
+    switch (list.Position) {
+        case "right":{
+            div.classList += " right"
+            break
+        } case "left":{
+            div.classList += " left"
+            break
+        }
+    }
+    switch (list.Type) {
+        case "Icon" :{
+            addImg(div,"headericon",list.Source)
+            break
+        } case "Text":{
+            addP(div,list.Text,"text")
+            break
+        } case "Link":{
+            addLink(div,list.Text,"headerlink text",list.Target)
+            break
+        }
+    }
 }
