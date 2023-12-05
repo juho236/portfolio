@@ -142,6 +142,9 @@ const pages = {
         addP(main,"Olen tehnyt kaiken HTML, JavaScript ja CSSn itse.","text")
         addH3(main,"Muut projektit","text bold")
         addP(main,"En pysty vapaa-ajan projekteja näyttämään nettiselaimessa, mutta pystyn JavaScript jutut näyttämään.<br>Voit katsoa tuotoksiani ja niiden lähdekoodia niiden sivuilta, jotka löytyvät sivun oikeasta reunasta.","text")
+    }},Error404:{Call:()=>{
+        const main = document.getElementById("main")
+        addH1(main,"Tätä sivua ei ole olemassa","text bold")
     }}
 }
 
