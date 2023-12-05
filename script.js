@@ -69,6 +69,8 @@ const pages = {
         const main = document.getElementById("main")
         const iframe = addElement("iframe",main,"gameframe","")
         iframe.src = "minesweeper/index.html"
+        addH1(main,"Koodi","text bold")
+        addOtherLink(main,"Githubin lähdekoodi")
     }},Tetris:{Call:()=>{
         const main = document.getElementById("main")
         const iframe = addElement("iframe",main,"gameframe","")
@@ -96,17 +98,20 @@ const pages = {
         addButton(main,"Special Transition (hash change)","text button",()=>{
             update("TransitionTest","Special")
         })
+        addButton(main,"Rocket Transition","text button",()=>{
+            update("TransitionTest","Special2")
+        })
     }}
 }
 
 const easingStyles = {
     In:{
         Sine:(alpha)=>{
-            return Math.sin(alpha*Math.PI/2)
+            return 1-Math.sin((1-alpha)*Math.PI/2)
         }
     },Out:{
         Sine:(alpha)=>{
-            return 1-Math.sin((1-alpha)*Math.PI/2)
+            return Math.sin(alpha*Math.PI/2)
         }
     },InOut:{
         Sine:(alpha)=>{
@@ -217,8 +222,37 @@ const transitions = {
             transition.style.right = (alpha1*-100)+"%"
             transition.style.top = (alpha1*-30)+"%"
         },Reset:(transitionTarget,transition)=>{
+            transitionTarget.style.transform = ""
+            transitionTarget.style.top = ""
             transitionTarget.style.left = ""
             transition.style.right = ""
+            transition.style.top = ""
+            transition.style.transform = ""
+        },ActivateBackground:true
+    },Special2:{
+        Start:(transitionTarget,transition)=>{
+            transitionTarget.style.left = "0%"
+            transition.style.right = "100%"
+            transition.style.transform = "scale(0.5)"
+        },InFrames:120,In:(alpha,transitionTarget,transition)=>{
+            const alpha1 = easingStyles.InOut.Sine(Math.min(alpha*4,1))
+            const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-1,0),1))
+            const alpha3 = easingStyles.Out.Sine(Math.max(alpha*2,1)-1)
+            transitionTarget.style.transform = "scale("+(1-alpha1/2)+")"
+            transitionTarget.style.left = (alpha2*100)+"%"
+            transition.style.right = (100-alpha3*100)+"%"
+        },Timeout:500,OutFrames:120,Out:(alpha,transitionTarget,transition)=>{
+            const alpha1 = easingStyles.In.Sine(Math.min(alpha*2,1))
+            const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-2,0),1))
+            const alpha3 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-3,0),1))
+            transitionTarget.style.transform = "scale("+(0.5+alpha3/2)+")"
+            transitionTarget.style.left = (alpha2*100-100)+"%"
+            transition.style.right = (alpha1*-100)+"%"
+        },Reset:(transitionTarget,transition)=>{
+            transitionTarget.style.transform = ""
+            transitionTarget.style.left = ""
+            transition.style.right = ""
+            transition.style.transform = ""
         },ActivateBackground:true
     }
 }
@@ -246,6 +280,7 @@ for (let i=0;i<layers.length;i++) {
 }
 
 const activateBackground = () => {
+    window.clearInterval(backgroundInt)
     backgroundInt = window.setInterval(()=>{
         frames++
         for (let i=0;i<layers.length;i++) {
@@ -280,7 +315,6 @@ const getId = () => {
     if (!pages[str]) {
         str = "Default"
     }
-    console.log(str)
     return str
 }
 
@@ -309,6 +343,7 @@ const run = (call,frames,id,endcall) => {
 
 let def = "Special"
 const update = (newId,transitionId) => {
+    console.log(transitionId)
     def = "Special"
     if (!transitionId) {
         transitionId = "Default"
@@ -364,14 +399,17 @@ const update = (newId,transitionId) => {
         const transition = document.getElementById("transition")
     
 
-        window.onhashchange = () => {
-            window.clearInterval(runIds.cooltransition)
-            window.clearTimeout(timeout)
-            update(getId(),def)
-        }
 
 
         const transIndex = transitions[transitionId]
+
+        window.onhashchange = () => {
+            window.clearInterval(runIds.cooltransition)
+            window.clearTimeout(timeout)
+            transIndex.Reset(transitionTarget,transition)
+            update(getId(),def)
+        }
+
 
         transition.style.display = "block"
 
@@ -435,13 +473,13 @@ const headerButtons = [
     {Position:"left",Type:"Icon",Source:"noise.png"},
     {Position:"left",Type:"Text",Text:"Kuva ja teksti vasemmalla"},
     {Position:"right",Type:"Text",Text:"Teksti oikealla"},
-    {Position:"right",Type:"Link",Text:"Linkki oikealla siirtymätestiin",Target:"#TransitionTest"}
+    {Position:"right",Type:"Link",Text:"Linkki oikealla siirtymätestiin",Target:"#TransitionTest",Transition:"Rotate"}
 ]
 
 const navButtons = [
-    {Title:"Kotisivu",Description:"Takaisin kotisivulle",ButtonType:"popup",ButtonText:"Mene",PopupQuestion:"Haluatko takaisin kotisivulle?",PopupTarget:"Default"},
-    {Title:"Minesweeper",Description:"Koodasin parissa tunnissa minesweeperin kun oli tylsää",ButtonType:"popup",ButtonText:"Pelaa",PopupQuestion:"Haluatko mennä pelaaman minesweeperiä?",PopupTarget:"Minesweeper"},
-    {Title:"Tetris",Description:"Oli tylsää niin koodasin tetriksen",ButtonType:"popup",ButtonText:"Pelaa",PopupQuestion:"Haluatko mennä pelaaman tetristä?",PopupTarget:"Tetris"},
+    {Title:"Kotisivu",Description:"Takaisin kotisivulle",ButtonType:"popup",ButtonText:"Mene",PopupQuestion:"Haluatko takaisin kotisivulle?",PopupTarget:"Default",Transition:"Default"},
+    {Title:"Minesweeper",Description:"Koodasin parissa tunnissa minesweeperin kun oli tylsää",ButtonType:"popup",ButtonText:"Pelaa",PopupQuestion:"Haluatko mennä pelaaman minesweeperiä?",PopupTarget:"Minesweeper",Transition:"Reverse"},
+    {Title:"Tetris",Description:"Oli tylsää niin koodasin tetriksen",ButtonType:"popup",ButtonText:"Pelaa",PopupQuestion:"Haluatko mennä pelaaman tetristä?",PopupTarget:"Tetris",Transition:"Spin"},
 ]
 
 const nav = document.getElementById("nav")
@@ -456,8 +494,8 @@ for (let i=0;i<navButtons.length;i++) {
                 createPopup(25,25,(popupframe,closepopup)=>{
                     addH1(popupframe,list.PopupQuestion,"text bold")
                     addLink(popupframe,"Kyllä","yes button text","#"+list.PopupTarget).onclick = () => {
+                        def = list.Transition
                         closepopup()
-                        update(list.PopupTarget)
                     }
                     addButton(popupframe,"Ei","no button text").onclick = closepopup
                 })
@@ -487,7 +525,9 @@ for (let i=0;i<headerButtons.length;i++) {
             addP(div,list.Text,"text")
             break
         } case "Link":{
-            addLink(div,list.Text,"headerlink text",list.Target)
+            addLink(div,list.Text,"headerlink text",list.Target).onclick = () => {
+                def = list.Transition
+            }
             break
         }
     }
