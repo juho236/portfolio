@@ -1,3 +1,6 @@
+// älä tee sitä
+
+
 let active = true
 const addElement = (id,parent,classlist,text) => {
     const el = document.createElement(id)
@@ -37,6 +40,9 @@ const addH1 = (parent,text,cl) => {
 const addH2 = (parent,text,cl) => {
     return addElement("h2",parent,cl,text)
 }
+const addH3 = (parent,text,cl) => {
+    return addElement("h3",parent,cl,text)
+}
 const addP = (parent,text,cl) => {
     return addElement("p",parent,cl,text)
 }
@@ -49,39 +55,45 @@ const addImg = (parent,cl,src) => {
     return img
 }
 
+// varoitan sinua
+
 const createPopup = (width,height,popupcreationcall) => {
     const bg = document.getElementById("popupbg")
     bg.style.display = "block"
     const popup = document.getElementById("popup")
-    popup.style.left = "calc(50% - "+(width/2)+"%)"
-    popup.style.top = "calc(50% - "+(height/2)+"%)"
-    popup.style.width = width+"%"
-    popup.style.height = height+"%"
+    popup.style.fontSize = (width+height)/2
     popup.innerHTML = ""
     popupcreationcall(popup,()=>{
         bg.style.display = "none"
     })
 }
 
+
+// älä selaa eteenpäin enää yhtään
 const pages = {
     Default:{Call:()=>{
         const main = document.getElementById("main")
         addH1(main,"Juhon hullu portfolio","text bold")
         addP(main,"Ihan hullu","text")
         addH2(main,"Mitäs kaikkea tällä sivulla on?","text bold")
-        addP(main,"Tällä sivulla on projektit tai linkki niihin, jotka haluan näyttää. Kaikki jutut pitäisi näkyä sivun oikeassa reunassa.","text")
-        addH2(main,"Mitä kaikkea osaan?","text")
+        addP(main,"Tällä sivulla on projektit tai linkki niihin, jotka haluan näyttää. Kaikki jutut pitäisi näkyä sivun oikeassa reunassa. Voit myös kirjoittaa osoitekenttään sivun nimen, ja mennä piilotetuille sivuille jos löydät oikean koodin! Ei saa sitten katsoa javascriptistä mitä koodeja on olemassa, koska se olisi huijaamista :).","text")
+        addH2(main,"Muutama linkki","text")
+        addLink(main,"Mitä kaikkea osaan?","text bold","#Skills").onclick = () => {
+            def = "Spin"
+        }
+        addLink(main,"Jotakin hauskaa","text bold","#TransitionTest").onclick = () => {
+            def = "Special"
+        }
     }},Minesweeper:{Call:()=>{
         const main = document.getElementById("main")
         const iframe = addElement("iframe",main,"gameframe","")
         iframe.src = "https://juho236.github.io/minesweeperclone/code/"
-        addH1(main,"Koodi","text bold")
-        addOtherLink(main,"Githubin lähdekoodi","text bold","https://github.com/juho236/minesweeperclone")
+        addOtherLink(main,"Githubin lähdekoodi","text","https://github.com/juho236/minesweeperclone")
     }},Tetris:{Call:()=>{
         const main = document.getElementById("main")
         const iframe = addElement("iframe",main,"gameframe","")
         iframe.src = "https://juho236.github.io/tetrisclone/code/"
-        addOtherLink(main,"Githubin lähdekoodi","text bold","https://github.com/juho236/tetrisclone")
+        addOtherLink(main,"Githubin lähdekoodi","text","https://github.com/juho236/tetrisclone")
     }},TransitionTest:{Call:()=>{
         const main = document.getElementById("main")
         addButton(main,"Default Transition","text button",()=>{
@@ -99,16 +111,29 @@ const pages = {
         addButton(main,"Skewed Transition","text button",()=>{
             update("TransitionTest","Rotate")
         })
-        addButton(main,"Star effect (never ends!!!)","text button",()=>{
-            document.body.requestFullscreen()
-            update("TransitionTest","star")
-        })
         addButton(main,"Special Transition (hash change)","text button",()=>{
             update("TransitionTest","Special")
         })
         addButton(main,"Rocket Transition","text button",()=>{
             update("TransitionTest","Special2")
         })
+    }},Secret:{Call:()=>{
+        const main = document.getElementById("main")
+        addH1(main,"Mitenkäs sinä tänne pääsit?","text bold")
+        addButton(main,"Paina tätä nappia","text button",()=>{
+            document.body.requestFullscreen()
+            update("Secret","star")
+        })
+    }},Skills:{Call:()=>{
+        const main = document.getElementById("main")
+        addH1(main,"Mitä kaikkea osaan?","text bold")
+        addH3(main,"Osaan parhaiten HTML, JavaScript, CSS ja Luaa.","text")
+        addP(main,"Olen koulussa oppinut HTML, JavaScript ja CSS nettisivujen tekemiseen.<br>Vapaa-ajan projekteissa ohjelmoin Lualla, niin osaan sitä vähän paremmin.<br>Osaan myös vähän pythonia ja php:tä.","text")
+        addH2(main,"No kuinka hyvin sitten osaan niitä?","text bold")
+        addH3(main,"Tämä koko nettisivu on tehty 100% itse omasta koodista.","text bold")
+        addP(main,"Olen tehnyt kaiken HTML, JavaScript ja CSSn itse.","text")
+        addH3(main,"Muut projektit","text bold")
+        addP(main,"En pysty vapaa-ajan projekteja näyttämään nettiselaimessa, mutta pystyn JavaScript jutut näyttämään.<br>Voit katsoa tuotoksiani ja niiden lähdekoodia niiden sivuilta, jotka löytyvät sivun oikeasta reunasta.","text")
     }}
 }
 
@@ -454,9 +479,10 @@ update()
 
 const headerButtons = [
     {Position:"left",Type:"Icon",Source:"noise.png"},
-    {Position:"left",Type:"Text",Text:"Kuva ja teksti vasemmalla"},
-    {Position:"right",Type:"Text",Text:"Teksti oikealla"},
-    {Position:"right",Type:"Link",Text:"Linkki oikealla siirtymätestiin",Target:"#TransitionTest",Transition:"Rotate"}
+    {Position:"left",Type:"Text",Text:"Juhon hieno portfolio",Bold:true,Size:"1.25em"},
+    {Position:"left",Type:"Text",Text:"Perustuu tositarinaan",Size:"1em"},
+    {Position:"right",Type:"Link",Text:"Kotisivu",Target:"#Default",Transition:"Special"},
+    {Position:"right",Type:"Link",Text:"Taidot",Target:"#Skills",Transition:"Special2"},
 ]
 
 const navButtons = [
@@ -468,9 +494,10 @@ const navButtons = [
 const nav = document.getElementById("nav")
 for (let i=0;i<navButtons.length;i++) {
     const list = navButtons[i]
-    const div = addDiv(nav,"navbutton")
-    addH1(div,list.Title,"text bold")
-    addH2(div,list.Description,"text")
+    const outset = addDiv(nav,"outset")
+    const div = addDiv(outset,"navbutton")
+    addH1(div,list.Title,"text bold left")
+    addH2(div,list.Description,"text left")
     addButton(div,list.ButtonText,"link button text",() => {
         switch (list.ButtonType) {
             case "popup":{
@@ -505,7 +532,15 @@ for (let i=0;i<headerButtons.length;i++) {
             addImg(div,"headericon",list.Source)
             break
         } case "Text":{
-            addP(div,list.Text,"text")
+            const xtr = function(){
+                if (list.Bold) {
+                    return " bold"
+                } else {
+                    return ""
+                }
+            }()
+            const p = addP(div,list.Text,"text"+xtr)
+            p.style.fontSize = list.Size
             break
         } case "Link":{
             addLink(div,list.Text,"headerlink text",list.Target).onclick = () => {
