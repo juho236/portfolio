@@ -11,6 +11,12 @@ const addElement = (id,parent,classlist,text) => {
 }
 const addButton = (parent,text,cl,onclickevent) => {
     const btn = addElement("Button",parent,cl,text)
+    btn.onmouseup = () => {
+        btn.classList = cl+" inset"
+        window.setInterval(()=>{
+            btn.classList = cl
+        },100)
+    }
     if (onclickevent) {
         btn.onclick = () => {
             if (active == true) {
@@ -62,10 +68,12 @@ const createPopup = (width,height,popupcreationcall) => {
     bg.style.display = "block"
     const popup = document.getElementById("popup")
     popup.style.fontSize = (width+height)/2
+    popup.style.opacity = 0
     popup.innerHTML = ""
     popupcreationcall(popup,()=>{
-        bg.style.display = "none"
+        run((alpha)=>{popup.style.opacity = 1-alpha},15,"popupfade",()=>{bg.style.display = "none"})
     })
+    run((alpha)=>{popup.style.opacity = alpha},15,"popupfade")
 }
 
 

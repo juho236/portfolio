@@ -2,6 +2,10 @@
     --dark: rgb(43,42,51);
 }
 
+button {
+    cursor: pointer;
+}
+
 body {
     overflow: hidden;
     font-size: 32px;
@@ -57,7 +61,7 @@ header {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    font-size: 16px;
+    font-size: 24px;
     position: fixed;
     background-color: var(--dark);
 }
@@ -153,6 +157,15 @@ body {
     border-radius: 4px;
     border-color: black;
     box-shadow: 4px 4px 2px rgb(0,0,0,.25);
+    filter: none;
+    transition: 100ms;
+    border-style: outset;
+}
+.button.inset {
+    border-style: inset;
+}
+.button:hover {
+    filter: brightness(1.25);
 }
 .left {
     text-align: left;
