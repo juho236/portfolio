@@ -1,23 +1,41 @@
 body {
     overflow: hidden;
-    background-image: url("noise.png");
     font-size: 32px;
 }
 header {
+    width: calc(100vw - 16px);
+    float: left;
+    background-color: rgb(43,42,51);
+    margin-bottom: 8px;
+    padding: 8px;
+}
+.headeritem {
 
 }
+.headericon {
+    border-radius: 2px;
+    border: 1px solid black;
+    max-height: 64px;
+}
+.headeritem.right {
+    float: right;
+}
+.headeritem.left {
+    float: left;
+}
 #transitiontarget {
+    background-image: url("noise.png");
     position: fixed;
-    width: 100vw;
-    height: 100vh;
+    width: calc(100vw - 4px);
+    height: calc(100vh - 4px);
+    border: 2px solid black;
 }
 #transition {
     position: fixed;
     background-color: black;
     width: 100%;
     height: 100%;
-    top: 0px;
-    left: 100%;
+    display: none;
 }
 #popupbg {
     position: fixed;
@@ -66,7 +84,9 @@ h3 {
 p {
     font-size: 0.8em;
 }
-
+body {
+    margin: 0px;
+}
 .text {
     margin: 8px;
     text-align: center;
@@ -102,4 +122,18 @@ p {
     border: none;
     width: 100%;
     height: 75vh;
+}
+
+.starframe {
+    z-index: -999;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+.starfield {
+    background-image: url("stars.png");
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
