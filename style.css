@@ -195,7 +195,6 @@ body {
     background-color: black;
 }
 .starfield {
-    background-image: url("stars.png");
     position: fixed;
     width: 100%;
     height: 100%;

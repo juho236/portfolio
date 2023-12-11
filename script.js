@@ -2,14 +2,15 @@
 
 
 let active = true
-const addElement = (id,parent,classlist,text) => {
+const addElement = (id,parent,classlist,text) => { // lisää uuden elementin
     const el = document.createElement(id)
     el.classList = classlist
     el.innerHTML = text
     parent.appendChild(el)
     return el
 }
-const addButton = (parent,text,cl,onclickevent) => {
+// lyhennettyjä funktioita
+const addButton = (parent,text,cl,onclickevent) => { 
     const btn = addElement("Button",parent,cl,text)
     btn.onmouseup = () => {
         btn.classList = cl+" inset"
@@ -26,7 +27,7 @@ const addButton = (parent,text,cl,onclickevent) => {
     }
     return btn
 }
-const addLink = (parent,text,cl,ref) => {
+const addLink = (parent,text,cl,ref) => { 
     const a = addElement("a",parent,cl,text)
     a.onclick = () => {
         def = "Default"
@@ -63,14 +64,14 @@ const addImg = (parent,cl,src) => {
 
 // varoitan sinua
 
-const createPopup = (width,height,popupcreationcall) => {
+const createPopup = (width,height,popupcreationcall) => { // tekee popupilmoituksen
     const bg = document.getElementById("popupbg")
     bg.style.display = "block"
     const popup = document.getElementById("popup")
     popup.style.fontSize = (width+height)/2
     popup.style.opacity = 0
     popup.innerHTML = ""
-    popupcreationcall(popup,()=>{
+    popupcreationcall(popup,()=>{ // palauttaa funktion joka sulkee ilmoituksen
         run((alpha)=>{popup.style.opacity = 1-alpha},15,"popupfade",()=>{bg.style.display = "none"})
     })
     run((alpha)=>{popup.style.opacity = alpha},15,"popupfade")
@@ -78,7 +79,7 @@ const createPopup = (width,height,popupcreationcall) => {
 
 
 // älä selaa eteenpäin enää yhtään
-const pages = {
+const pages = { // varastoi kaikki sivut
     Default:{Call:()=>{
         const main = document.getElementById("main")
         addH1(main,"Juhon hullu portfolio","text bold")
@@ -150,7 +151,7 @@ const pages = {
     }}
 }
 
-const easingStyles = {
+const easingStyles = { // vähän siirtymätyylejä
     In:{
         Sine:(alpha)=>{
             return 1-Math.sin((1-alpha)*Math.PI/2)
@@ -166,7 +167,7 @@ const easingStyles = {
     },
 }
 
-const transitions = {
+const transitions = { // kaikki mahdolliset siirtymät
     Default:{
         Start:(transitionTarget,transition)=>{
             transitionTarget.style.right = "0%"
@@ -303,6 +304,8 @@ const transitions = {
     }
 }
 
+////siirtymien taustakuva
+
 let frames = 0
 let backgroundInt = 0
 
@@ -320,12 +323,13 @@ for (let i=0;i<layers.length;i++) {
     const l = layers[i]
     const scale = l.Scale
     const el = addDiv(effectFrame,"starfield")
+    el.style.backgroundImage = "url(stars"+(i+1)+".png)"
     el.style.backgroundSize = (scale)+"px "+(scale)+"px"
     el.style.opacity = l.Opacity
     layers[i] = {Ref:el,Scale:scale,Multiplier:l.Multiplier}
 }
 
-const activateBackground = () => {
+const activateBackground = () => { // aktivoi taustan
     window.clearInterval(backgroundInt)
     backgroundInt = window.setInterval(()=>{
         frames++
@@ -336,11 +340,13 @@ const activateBackground = () => {
         }
     },1)
 }
-const deActivateBackground = () => {
+const deActivateBackground = () => { // deaktivoi taustan
     frames = 0
     window.clearInterval(backgroundInt)
 }
+// 
 
+//// sivun id
 const getId = () => {
     const url = document.URL
     let str = ""
@@ -366,17 +372,19 @@ const getId = () => {
 
 let id = getId()
 
-const runIds = []
-const run = (call,frames,id,endcall) => {
-    if (runIds[id]) {
+//
+
+const runIds = [] // varastoi intervallit
+const run = (call,frames,id,endcall) => { // tärkeä funktio jota käytetään transitioihin ja animaatioihin
+    if (runIds[id]) { // lopettaa vanhan intervallin
         window.clearInterval(runIds[id])
     }
-    let f = 0
+    let f = 0 // laskee askeleet
     const int = window.setInterval(()=>{
         f++
-        if (f<frames) {
+        if (f<frames) { // ei ole menny tarkeeksi askeleita
             call(f/frames)
-        } else {
+        } else { // kaikki askeleet on tehty ja funktio loppuu
             call(1)
             if (endcall) {
                 endcall()
@@ -384,11 +392,13 @@ const run = (call,frames,id,endcall) => {
             window.clearInterval(int)
         }
     },1/120)
-    runIds[id] = int
+    runIds[id] = int // varastoi intervallin
 }
 
-let def = "Special"
-const update = (newId,transitionId) => {
+let def = "Special" // transitiotyyppi
+
+
+const update = (newId,transitionId) => { // tärkeä funktio joka päivittää sivun ja tekee transition silloin kun url vaihtuu
     console.log(transitionId)
     def = "Special"
     if (!transitionId) {
@@ -490,7 +500,7 @@ const update = (newId,transitionId) => {
 
 update()
 
-const headerButtons = [
+const headerButtons = [ // varastoi napit yläpalkista
     {Position:"left",Type:"Icon",Source:"noise.png"},
     {Position:"left",Type:"Text",Text:"Juhon hieno portfolio",Bold:true,Size:"1.25em"},
     {Position:"left",Type:"Text",Text:"Perustuu tositarinaan",Size:"1em"},
@@ -498,14 +508,14 @@ const headerButtons = [
     {Position:"right",Type:"Link",Text:"Taidot",Target:"#Skills",Transition:"Special2"},
 ]
 
-const navButtons = [
+const navButtons = [ // varasoi napit navigointipalkista
     {Title:"Kotisivu",Description:"Takaisin kotisivulle",ButtonType:"popup",ButtonText:"Mene",PopupQuestion:"Haluatko takaisin kotisivulle?",PopupTarget:"Default",Transition:"Default"},
     {Title:"Minesweeper",Description:"Koodasin parissa tunnissa minesweeperin kun oli tylsää",ButtonType:"popup",ButtonText:"Pelaa",PopupQuestion:"Haluatko mennä pelaaman minesweeperiä?",PopupTarget:"Minesweeper",Transition:"Reverse"},
     {Title:"Tetris",Description:"Oli tylsää niin koodasin tetriksen",ButtonType:"popup",ButtonText:"Pelaa",PopupQuestion:"Haluatko mennä pelaaman tetristä?",PopupTarget:"Tetris",Transition:"Spin"},
 ]
 
 const nav = document.getElementById("nav")
-for (let i=0;i<navButtons.length;i++) {
+for (let i=0;i<navButtons.length;i++) { // luo navigointipalkin napit
     const list = navButtons[i]
     const outset = addDiv(nav,"outset")
     const div = addDiv(outset,"navbutton")
@@ -528,7 +538,7 @@ for (let i=0;i<navButtons.length;i++) {
 }
 
 const header = document.getElementById("header")
-for (let i=0;i<headerButtons.length;i++) {
+for (let i=0;i<headerButtons.length;i++) { // luo yläpalkin napit
     const list = headerButtons[i]
     const div = addDiv(header,"headeritem")
     switch (list.Position) {
