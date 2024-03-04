@@ -72,9 +72,9 @@ const createPopup = (width,height,popupcreationcall) => { // tekee popupilmoituk
     popup.style.opacity = 0
     popup.innerHTML = ""
     popupcreationcall(popup,()=>{ // palauttaa funktion joka sulkee ilmoituksen
-        run((alpha)=>{popup.style.opacity = 1-alpha},15,"popupfade",()=>{bg.style.display = "none"})
+        run(100,(alpha)=>{popup.style.opacity = 1-alpha},()=>{bg.style.display = "none"})
     })
-    run((alpha)=>{popup.style.opacity = alpha},15,"popupfade")
+    run(100,(alpha)=>{popup.style.opacity = alpha})
 }
 
 
@@ -172,10 +172,10 @@ const transitions = { // kaikki mahdolliset siirtymät
         Start:(transitionTarget,transition)=>{
             transitionTarget.style.right = "0%"
             transition.style.left = "100%"
-        },InFrames:30,In:(alpha,transitionTarget,transition)=>{
+        },InTime:500,In:(alpha,transitionTarget,transition)=>{
             transitionTarget.style.right = (alpha*100)+"%"
             transition.style.left = ((1-alpha)*100)+"%"
-        },Timeout:500,OutFrames:30,Out:(alpha,transitionTarget,transition)=>{
+        },Timeout:500,OutTime:500,Out:(alpha,transitionTarget,transition)=>{
             transitionTarget.style.right = (alpha*100-100)+"%"
             transition.style.left = (-alpha*100)+"%"
         },Reset:(transitionTarget,transition)=>{
@@ -186,10 +186,10 @@ const transitions = { // kaikki mahdolliset siirtymät
         Start:(transitionTarget,transition)=>{
             transitionTarget.style.left = "0%"
             transition.style.right = "100%"
-        },InFrames:30,In:(alpha,transitionTarget,transition)=>{
+        },InTime:500,In:(alpha,transitionTarget,transition)=>{
             transitionTarget.style.left = (alpha*100)+"%"
             transition.style.right = ((1-alpha)*100)+"%"
-        },Timeout:500,OutFrames:30,Out:(alpha,transitionTarget,transition)=>{
+        },Timeout:500,OutTime:500,Out:(alpha,transitionTarget,transition)=>{
             transitionTarget.style.left = (alpha*100-100)+"%"
             transition.style.right = (-alpha*100)+"%"
         },Reset:(transitionTarget,transition)=>{
@@ -199,9 +199,9 @@ const transitions = { // kaikki mahdolliset siirtymät
     },Fade:{
         Start:(transitionTarget,transition)=>{
             transition.style.opacity = 0
-        },InFrames:60,In:(alpha,transitionTarget,transition)=>{
+        },InTime:1000,In:(alpha,transitionTarget,transition)=>{
             transition.style.opacity = alpha
-        },Timeout:500,OutFrames:60,Out:(alpha,transitionTarget,transition)=>{
+        },Timeout:500,OutTime:1000,Out:(alpha,transitionTarget,transition)=>{
             transition.style.opacity = 1-alpha
         },Reset:(transitionTarget,transition)=>{
             transitionTarget.style.opacity = ""
@@ -211,11 +211,11 @@ const transitions = { // kaikki mahdolliset siirtymät
         Start:(transitionTarget,transition)=>{
             transition.style.opacity = 0
             transition.style.rotate = "-180deg"
-        },InFrames:60,In:(alpha,transitionTarget,transition)=>{
+        },InTime:1000,In:(alpha,transitionTarget,transition)=>{
             transition.style.opacity = alpha
             transitionTarget.style.rotate = (alpha*180)+"deg"
             transition.style.rotate = (alpha*180-180)+"deg"
-        },Timeout:500,OutFrames:60,Out:(alpha,transitionTarget,transition)=>{
+        },Timeout:500,OutTime:1000,Out:(alpha,transitionTarget,transition)=>{
             transition.style.opacity = 1-alpha
             transitionTarget.style.rotate = (alpha*180-180)+"deg"
             transition.style.rotate = (alpha*180)+"deg"
@@ -227,10 +227,10 @@ const transitions = { // kaikki mahdolliset siirtymät
     },Rotate:{
         Start:(transitionTarget,transition)=>{
             transition.style.transform = "rotateX(-90deg)"
-        },InFrames:60,EaseIn:easingStyles.InOut.Sine,In:(alpha,transitionTarget,transition)=>{
+        },InTime:1000,EaseIn:easingStyles.InOut.Sine,In:(alpha,transitionTarget,transition)=>{
             transitionTarget.style.transform = "rotateX("+(Math.min(alpha*180,90))+"deg)"
             transition.style.transform = "rotateX("+(Math.max(-(1-alpha)*180,-90))+"deg)"
-        },Timeout:0,OutFrames:60,EaseOut:easingStyles.InOut.Sine,Out:(alpha,transitionTarget,transition)=>{
+        },Timeout:0,OutTime:1000,EaseOut:easingStyles.InOut.Sine,Out:(alpha,transitionTarget,transition)=>{
             transitionTarget.style.transform = "rotateX("+(Math.max(-(1-alpha)*180,-90))+"deg)"
             transition.style.transform = "rotateX("+(Math.min(alpha*180,90))+"deg)"
         },Reset:(transitionTarget,transition)=>{
@@ -241,7 +241,7 @@ const transitions = { // kaikki mahdolliset siirtymät
         Start:(transitionTarget,transition)=>{
             transition.style.opacity = 0
             transitionTarget.style.opacity = 1
-        },InFrames:360,In:(alpha,transitionTarget,transition)=>{
+        },InTime:5000,In:(alpha,transitionTarget,transition)=>{
             transitionTarget.style.opacity = 1-alpha
         },ActivateBackground:true,Timeout:100000000000000
     },Special:{
@@ -250,7 +250,7 @@ const transitions = { // kaikki mahdolliset siirtymät
             transition.style.right = "100%"
             transition.style.top = "30%"
             transition.style.transform = "scale(0.5) skewY(-10deg)"
-        },InFrames:120,In:(alpha,transitionTarget,transition)=>{
+        },InTime:2000,In:(alpha,transitionTarget,transition)=>{
             const alpha1 = easingStyles.InOut.Sine(Math.min(alpha*4,1))
             const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-1,0),1))
             const alpha3 = easingStyles.InOut.Sine(Math.max(alpha*2,1)-1)
@@ -259,7 +259,7 @@ const transitions = { // kaikki mahdolliset siirtymät
             transitionTarget.style.top = (alpha3*-30)+"%"
             transition.style.right = ((1-alpha3)*100)+"%"
             transition.style.top = ((1-alpha3)*30)+"%"
-        },Timeout:500,OutFrames:120,Out:(alpha,transitionTarget,transition)=>{
+        },Timeout:500,OutTime:2000,Out:(alpha,transitionTarget,transition)=>{
             const alpha1 = easingStyles.InOut.Sine(Math.min(alpha*2,1))
             const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-2,0),1))
             const alpha3 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-3,0),1))
@@ -281,14 +281,14 @@ const transitions = { // kaikki mahdolliset siirtymät
             transitionTarget.style.left = "0%"
             transition.style.right = "100%"
             transition.style.transform = "scale(0.5)"
-        },InFrames:120,In:(alpha,transitionTarget,transition)=>{
+        },InTime:2000,In:(alpha,transitionTarget,transition)=>{
             const alpha1 = easingStyles.InOut.Sine(Math.min(alpha*4,1))
             const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-1,0),1))
             const alpha3 = easingStyles.Out.Sine(Math.max(alpha*2,1)-1)
             transitionTarget.style.transform = "scale("+(1-alpha1/2)+")"
             transitionTarget.style.left = (alpha2*100)+"%"
             transition.style.right = (100-alpha3*100)+"%"
-        },Timeout:500,OutFrames:120,Out:(alpha,transitionTarget,transition)=>{
+        },Timeout:500,OutTime:2000,Out:(alpha,transitionTarget,transition)=>{
             const alpha1 = easingStyles.In.Sine(Math.min(alpha*2,1))
             const alpha2 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-2,0),1))
             const alpha3 = easingStyles.InOut.Sine(Math.min(Math.max(alpha*4-3,0),1))
@@ -304,7 +304,7 @@ const transitions = { // kaikki mahdolliset siirtymät
     }
 }
 
-////siirtymien taustakuva
+// siirtymien taustakuva
 
 let frames = 0
 let backgroundInt = 0
@@ -372,27 +372,26 @@ const getId = () => {
 
 let id = getId()
 
-//
+function time() {
+    return new Date().getTime()
+}
 
-const runIds = [] // varastoi intervallit
-const run = (call,frames,id,endcall) => { // tärkeä funktio jota käytetään transitioihin ja animaatioihin
-    if (runIds[id]) { // lopettaa vanhan intervallin
-        window.clearInterval(runIds[id])
-    }
-    let f = 0 // laskee askeleet
-    const int = window.setInterval(()=>{
-        f++
-        if (f<frames) { // ei ole menny tarkeeksi askeleita
-            call(f/frames)
-        } else { // kaikki askeleet on tehty ja funktio loppuu
+const run = (timeout,call,endcall) => { // tärkeä funktio jota käytetään transitioihin ja animaatioihin
+    let t = time() // aloitusaika
+    function upd() {
+        const tt = time()
+        const d = tt-t
+        if (d<timeout) {
+            call(d/timeout)
+            window.requestAnimationFrame(upd)
+        } else {
             call(1)
             if (endcall) {
                 endcall()
             }
-            window.clearInterval(int)
         }
-    },1/120)
-    runIds[id] = int // varastoi intervallin
+    }
+    window.requestAnimationFrame(upd)
 }
 
 let def = "Special" // transitiotyyppi
@@ -466,16 +465,16 @@ const update = (newId,transitionId) => { // tärkeä funktio joka päivittää s
         if (transIndex.ActivateBackground) {
             activateBackground()
         }
-        run((alpha)=>{
+        run(transIndex.InTime,(alpha)=>{
             transIndex.In(easeIn(alpha),transitionTarget,transition)
-        },transIndex.InFrames,"cooltransition",()=>{
+        },()=>{
             const c = () => {
                 window.onhashchange = () => {
                     update(getId(),def)
                 }
-                run((alpha)=>{
+                run(transIndex.OutTime,(alpha)=>{
                     transIndex.Out(easeOut(alpha),transitionTarget,transition)
-                },transIndex.OutFrames,"cooltransition",()=>{
+                },()=>{
                     deActivateBackground()
                     active = true
                     transition.style.display = "none"
