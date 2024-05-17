@@ -119,4 +119,4 @@ linkTab("tabs-info","Tietoja minusta");
 linkTab("tabs-games","Koodaukset");
 linkTab("tabs-testing","Testaus");
 
-enableTab("tabs-games");
+enableTab("tabs-main");
