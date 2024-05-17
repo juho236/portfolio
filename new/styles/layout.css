@@ -1,0 +1,138 @@
+#main-background {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: -999;
+    position: fixed;
+}
+
+.container-normal {
+    position: relative;
+    background-color: var(--container-normal-background);
+    margin: 2px;
+}
+.container-noborder {
+    background-color: var(--container-normal-background);
+    border: 2px solid #00000000;
+    margin: 2px;
+}
+.list-contents, .container-tab {
+    position: absolute;
+    height: auto;
+    margin: 8px;
+    width: calc(100% - 16px);
+}
+h1 {
+    font-size: 3em;
+    margin: 12px 0px;
+}
+h2 {
+    font-size: 2em;
+    margin: 8px 0px;
+}
+h3 {
+    font-size: 1.5em;
+    margin: 4px 0px
+}
+p {
+    font-size: 1em;
+    margin: 2px 0px;
+    font-weight: 400;
+}
+.text-center {
+    text-align: center;
+}
+#main {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    display: inline-block;
+}
+#main-content {
+    margin: 8px;
+    width: 1000px;
+    max-width: 75vw;
+}
+#main-header {
+    margin: 8px;
+}
+
+#main-tabs {
+    overflow: scroll;
+}
+
+#main-content-grid {
+    height: 700px;
+    max-height: 75vh;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 20% 80%;
+}
+
+.tab-closed, .tab-open {
+    display: inline-block;
+    margin: -2px;
+    transition: 500ms ease-in-out;
+}
+.tab-closed {
+    border: 8px solid #00000000;
+}
+.container-normal, .tab-open {
+    border: 8px solid transparent;
+    border-image-source: url(border.png);
+    border-image-repeat: round;
+    border-image-width: 16px;
+    border-image-slice: 16;
+}
+
+.tab-button, .dropdown-button {
+    background-color: #00000000;
+    color: inherit;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 0px;
+    padding: 0px;
+    transition: 100ms ease-in-out;
+}
+
+.tab-button {
+    border: 2px solid #00000000;
+    margin: 2px;
+    padding: 4px;
+}
+.tab-button:hover {
+    border: 2px solid var(--select-color);
+}
+
+.list-content {
+    padding-left: 16px;
+}
+
+.link-content, .link-shortcut, .link-game {
+    color: var(--link-color);
+}
+.link-content:active, .link-content:hover, .link-shortcut:active, .link-shortcut:hover, .link-game:active, .link-game:hover {
+    color: var(--link-color-active);
+}
+
+.inset-title > * {
+    display: inline-block;
+    margin: 0px;
+}
+
+.dropdown-button {
+    width: 16px;
+    height: 16px;
+}
+.dropdown-icon {
+    width: 8px;
+    height: 8px;
+}
+
+.list-generic {
+    padding-left: 24px;
+}

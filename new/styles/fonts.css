@@ -1,0 +1,5 @@
+body {
+    color: var(--font-color);
+    font-size: 12px;
+    font-family: 'Segoe UI', sans-serif;
+}

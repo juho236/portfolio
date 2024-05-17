@@ -1,0 +1,13 @@
+:root {
+    --font-color: #eeeeee;
+
+    --theme-color: #ff3336;
+    --secondary-color: #f86790;
+    --select-color: #ffffff;
+
+    --container-normal-background: rgb(0,0,0,0.5);
+    --container-normal-border: var(--theme-color);
+
+    --link-color: var(--secondary-color);
+    --link-color-active: var(--theme-color);
+}

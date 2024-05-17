@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/colors.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <title>Portfolio</title>
+</head>
+<body>
+    <canvas id="main-background">
+        Et saa hienoa taustaa :(
+    </canvas>
+    <div id="main">
+        <header id="main-header" style="opacity: 0;">
+            <div class="container-normal">
+                <h2 class="text-center">Juho Toivolan Portfolio</h2>
+            </div>
+        </header>
+        <main id="main-content" style="opacity: 0;">
+            <div class="container-noborder" id="main-tablist">
+                
+            </div>
+            <div id="main-content-grid">
+                <div class="container-normal" id="sidebar-left">
+                    <div class="container-contents">
+                        <h2 class="text-center">Sisältö</h2>
+                        <ul class="list-content list-contents" id="tabs-main-content">
+                            <li class="list-content-item">
+                                <div class="inset-title">
+                                    <a class="link-content" href="#page-main-1">Etusivu</a>
+                                </div>
+                                <ul class="list-content">
+                                    <li class="list-content-item">
+                                        <div class="inset-title">
+                                            <a class="link-content" href="#page-main-1.1">Perustiedot</a>
+                                        </div>
+                                        <ul class="list-content">
+                                            <li class="list-content-item">
+                                                <div class="inset-title">
+                                                    <a class="link-content" href="#page-main-1.1.1">Osaamani koodikielet</a>
+                                                </div>
+                                                <ul class="list-content">
+                                                    <li class="list-generic-item"><a class="link-content" onclick="enableTab('tabs-info')" href="#page-info-1.3.1">PHP</a></li>
+                                                    <li class="list-generic-item"><a class="link-content" onclick="enableTab('tabs-info')" href="#page-info-1.3.2">JavaScript</a></li>
+                                                    <li class="list-generic-item"><a class="link-content" onclick="enableTab('tabs-info')" href="#page-info-1.3.3">HTML</a></li>
+                                                    <li class="list-generic-item"><a class="link-content" onclick="enableTab('tabs-info')" href="#page-info-1.3.4">C#</a></li>
+                                                    <li class="list-generic-item"><a class="link-content" onclick="enableTab('tabs-info')" href="#page-info-1.3.5">SQL</a></li>
+                                                    <li class="list-generic-item"><a class="link-content" onclick="enableTab('tabs-info')" href="#page-info-1.3.6">Lua</a></li>
+                                                    <li class="list-generic-item"><a class="link-content" onclick="enableTab('tabs-info')" href="#page-info-1.3.7">TypeScript</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="list-content-item">
+                                                <a class="link-content" href="#page-main-1.1.2">Tällä hetkellä</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="list-content list-contents" id="tabs-info-content">
+                            <li class="list-content-item">
+                                <div class="inset-title">
+                                    <a class="link-content" href="#page-info-1">Tietoja minusta</a>
+                                </div>
+                                <ul class="list-content">
+                                    <li class="list-content-item">
+                                        <a class="link-content" href="#page-info-1.1">Itsestäni</a>
+                                    </li>
+                                    <li class="list-content-item">
+                                        <a class="link-content" href="#page-info-1.2">Osaamiseni</a>
+                                    </li>
+                                    <li class="list-content-item">
+                                        <div class="inset-title">
+                                            <a class="link-content" href="#page-info-1.3">Osaamani koodikielet</a>
+                                        </div>
+                                        <ul class="list-content">
+                                            <li class="list-generic-item"><a class="link-content" href="#page-info-1.3.1">PHP</a></li>
+                                            <li class="list-generic-item"><a class="link-content" href="#page-info-1.3.2">JavaScript</a></li>
+                                            <li class="list-generic-item"><a class="link-content" href="#page-info-1.3.3">HTML</a></li>
+                                            <li class="list-generic-item"><a class="link-content" href="#page-info-1.3.4">C#</a></li>
+                                            <li class="list-generic-item"><a class="link-content" href="#page-info-1.3.5">SQL</a></li>
+                                            <li class="list-generic-item"><a class="link-content" href="#page-info-1.3.6">Lua</a></li>
+                                            <li class="list-generic-item"><a class="link-content" href="#page-info-1.3.7">TypeScript</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="list-content list-contents" id="tabs-testing-content">
+                            <li class="list-content-item"><a class="link-content" href="#">Linkki</a></li>
+                            <li class="list-content-item"><a class="link-content" href="#">Toinen linkki</a></li>
+                            <li class="list-content-item">
+                                <div class="inset-title">
+                                    <p class="text-normal">Sisennys</p>
+                                </div>
+                                <ul class="list-content">
+                                    <li class="list-content-item">Tekstiä</li>
+                                </ul>
+                            </li>
+                            <li class="list-content-item">
+                                <div class="inset-title">
+                                    <p class="text-normal">Toinen sisennys</p>
+                                </div>
+                                <ul class="list-content">
+                                    <li class="list-content-item">Lisää tekstiä</li>
+                                </ul>
+                            </li>
+                            <li class="list-content-item">
+                                <div class="inset-title">
+                                    <p class="text-normal">Kolmas sisennys</p>
+                                </div>
+                                <ul class="list-content">
+                                    <li class="list-content-item">
+                                        <div class="inset-title">
+                                            <p class="text-normal">Sisennys Sisennyksessä</p>
+                                        </div>
+                                        <ul class="list-content">
+                                            <li class="list-content-item">Tärkeää tekstiä</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="list-content list-contests" id="tabs-games-content">
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="container-normal" id="main-tabs">
+                    <div class="container-tab" id="tabs-main">
+                        <h1 id="page-main-1" class="text-normal">Etusivu</h1>
+                        <h2 id="page-main-1.1">Perustiedot</h2>
+                        <p class="text-normal">
+                            Olen 16 vuotta vanha opiskelija Tredussa. 
+                            Opiskelen tällä hetkellä Hepolamminkadun toimipisteessä ohjelmistokehittäjäksi ja ylioppilaaksi.
+                            Olen kiinnostunut ohjelmoinnista, ja tykkään ohjelmoida.
+                        </p>
+                        <a class="link-shortcut" href="#page-info-1" onclick="enableTab('tabs-info')">Lisää tietoja</a>
+                        <h3 id="page-main-1.1.1" class="text-normal">Osaamani koodikielet</h3>
+                        <ul class="list-generic">
+                            <li class="list-generic-item">PHP</li>
+                            <li class="list-generic-item">JavaScript</li>
+                            <li class="list-generic-item">HTML</li>
+                            <li class="list-generic-item">C#</li>
+                            <li class="list-generic-item">SQL</li>
+                            <li class="list-generic-item">Lua</li>
+                            <li class="list-generic-item">TypeScript</li>
+                        </ul>
+                        <h3 id="page-main-1.1.2" class="text-normal">Tällä hetkellä</h3>
+                        <p class="text-normal">
+                            Olen ensimmäisellä vuodella opiskelemassa, ja olen melkein valmis. Asun kangasalla, ja tulen aina kouluun bussilla.
+                        </p>
+                    </div>
+                    <div class="container-tab" id="tabs-info">
+                        <h1 id="page-info-1" class="text-normal">Tietoja minusta</h1>
+                        <h2 id="page-info-1.1" class="text-normal">Itsestäni</h2>
+                        <p class="text-normal">
+                            Olen 16 vuotta vanha opiskelija ensimmäisellä vuodella Tampereen seudun ammattiopisto Tredussa.
+                            Olen kiinnostunut ohjelmoinnista ja sävellyksestä, ja teen molempia vapaa ajalla.
+                            Olen pelannut paljon pelejä, ja halusin tehdä itse oman pelin, jonka takia opin ohjelmoimaan.
+                            Ohjelmointi oli minulle kivaa, ja piti tehdä opiskelijavalinta, niin hain Treduun ohjelmistokehittäjäksi.
+                        </p>
+                        <h2 id="page-info-1.2" class="text-normal">Osaamiseni</h2>
+                        <p class="text-normal">
+                            Osaan ohjelmoida ja tehdä musiikkia. Opin molempia koska ne kiinnostaa minua.
+                        </p>
+                        <h2 id="page-info-1.3" class="text-normal">Osaamani koodikielet</h2>
+                        <h3 id="page-info-1.3.1" class="text-normal">PHP</h3>
+                        <p class="text-normal">
+                            Opin PHP:tä koulussa, kun teimme 9 PHP-harjoitusta ensimmäisen vuoden keväällä.
+                            Osaan tehdä PHP:llä paljon erilaisia asioita, esimerkiksi: backend koodia, frontend koodia, tietokantayhteyksiä.
+                            Osaan ohjelmoida kokonaisen nettisivun tietokantayhteyksillä ja käyttäjillä PHP:n avulla. 
+                            PHP on omasta mielestäni outo ohjelmointikieli monista eri syistä, esimerkiksi funktioiden nimestä on todella vaikea päätellä mitä ne tekee, että periaatteessa pitää katsoa netistä mitä se tekee.
+                            Myös se että muuttujien eteen pitää laittaa $, on vähän ärsyttävää.
+                            Muuten, PHP on ihan OK ohjelmointikieli, vaikka sen syntaksi on outo.
+                        </p>
+                        <h3 id="page-info-1.3.2" class="text-normal">JavaScript</h3>
+                        <p class="text-normal">
+                            Opin JavaScriptiä koulussa myös, kun teimme syksyllä 5 JavaScript-harjoitusta. 
+                            Osasin ennestään jo Pythonia ja Luaa, jonka takia JavaScript oli helppo oppia.
+                            Osaan tehdä JavaScriptillä kaikenlaista, esimerkiksi animaatioita, nappeja, kanvas-efektejä ja jopa kokonaisen 2d pelin.
+                            Yleensä käytän JavaScriptiä PHP:n kanssa, kun pitää muuttaa tietoja sivulla lataamatta sivua kokonaan uudestaan. 
+                            Itse asiassa, tämä efekti tässä tekstin takana, on minun tekemä, ja tein sen tyhjästä pelkällä JavaScriptillä.
+                            En osaa käyttää JavaScript-frameworkkeja vielä, enkä myöskään halua käyttää niitä itse, mutta opin toisella vuodella miten niitä käytetään.
+                            JavaScript on minun mielestäni ihan hyvä, mutta huonoin juttu JavaScriptissä on minun mielestäni listat.
+                            Ainoa tapa miten listoista voi poistaa tietoja on tekemällä uusi lista ilman vanhaa tietoa, joka on paljon ärsyttävämpää, kun se että vain poistaisi tiedon listasta.
+                            JavaScriptissä ei myöskään ole minkäänlaista tyypitystä, mikä ei ole niin iso ongelma, mutta koodia on vähän vaikeampi tajuta, jos ei edes pysty vapaaehtoisesti laittamaan muuttujille tyyppejä.
+                        </p>
+                        <h3 id="page-info-1.3.3" class="text-normal">HTML</h3>
+                        <p class="text-normal">
+                            Opin HTML:lää, kun halusin tietää miten tehdä omia nettisivuja. Osaan tehdä HTML:llä kaikenlaisia sivuja, käyttämällä apuna CSS:sää.
+                            Tulin paljon paremmaksi HTML:llä kun tein koulussa syksyllä 5 HTML-harjoitusta.
+                            JavaScript-harjoituksissa ja PHP-harjoituksissa on ollut melkein kaikissa mukana HTML:lää, joten osaan tehdä sillä melkein mitä tahansa.
+                            Omasta mielestäni HTML on hyvä koodikieli, ja siinä ei ole mitään isoa mikä olisi jotenkin huonosti.
+                            Ainoa huono asia HTML:ssä on se, että pitää käyttää CSS:sää apuna, ja CSS-tyylittely on ärsyttävää, koska monet jutut toimivat todella oudosti.
+                        </p>
+                        <h3 id="page-info-1.3.4" class="text-normal">C#</h3>
+                        <p class="text-normal">
+                            Olen harjoitellut vähän C# kotona, kun halusin opetella tekemään oman .exe tiedoston. Osaan syntaksia todella hyvin, mutta en mitään muuta.
+                            En ole käyttänyt Unityä tai mitään muuta missä käytetään C#.
+                            Omasta mielestäni C# on hyvä koodikieli, koska siinä on tyypitykset, luokat ja kaikki muut hyvät jutut.
+                            Mielipiteeni asiasta saattaa muuttua kun koodaan lisää.
+                        </p>
+                        <h3 id="page-info-1.3.5" class="text-normal">SQL</h3>
+                        <p class="text-normal">
+                            Opin SQL:lää koulussa kun tein PHP-tietokantaharjoituksia. Osaan tehdä peruskyselyistä monimutkaisiin kyselyihin kaikenlaista.
+                            Omasta mielestäni se on simppeli ja tekee työnsä.
+                        </p>
+                        <h3 id="page-info-1.3.6" class="text-normal">Lua</h3>
+                        <p class="text-normal">
+                            Olen vapaa-ajalla opetellut käyttämään Roblox Studiota, jonka takia olen oppinut myös Luaa samalla.
+                            Osaan tehdä Lualla kaikkea, koska olen käyttänyt sitä niin paljon.
+                            Omasta mielestäni se on hyvä, koska se on helppo, mutta sillä voi myös tehdä todella monimutkaisia asioitakin.
+                            Paras juttu Luassa on se, että vaikka tyypitykset ja statementtien sulkeminen onkin vapaaehtoista, niin ne voi tehdä silti, mikä auttaa koodin luettavuutta ja ymmärrettävyyttä.
+                        </p>
+                        <h3 id="page-info-1.3.7" class="text-normal">TypeScript</h3>
+                        <p class="text-normal">
+                            TypeScript on JavaScript mutta tyypityksillä.
+                            Tämä simppeli muutos tekee siitä paljon paremman kun JavaScriptistä.
+                            En ole käyttänyt sitä mutta sen syntaksi on melkein identtinen JavaScriptin kanssa, joten osaan käyttää sitä.
+                        </p>
+                    </div>
+                    <div class="container-tab" id="tabs-testing">
+                        <h1 class="text-normal">Testauspaikka</h1>
+                        <h2 class="text-normal">Täällä testataan</h2>
+                    </div>
+                    <div class="container-tab" id="tabs-games">
+                        <h1 class="text-normal">Koodaukset</h1>
+                        <p class="text-normal">
+                            Olen tehnyt näitä silloin kun on ollut tylsää.
+                            Kaikki linkit avautuvat uuteen ikkunaan.
+                        </p>
+                        <ul class="list-games">
+                            <li class="list-games-item">
+                                <img class="game-icon">
+                                <p class="text-game-title">Testi</p>
+                                <a class="link-game" href="../../hullut-jutut/peli" target="_blank">Avaa</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="scripts/background.js"></script>
+    <script src="scripts/animations.js"></script>
+    <script src="scripts/tabs.js"></script>
+</body>
+</html>
