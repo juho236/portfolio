@@ -117,6 +117,5 @@ async function enableTab(index) {
 linkTab("tabs-main","Etusivu");
 linkTab("tabs-info","Tietoja minusta");
 linkTab("tabs-games","Koodaukset");
-linkTab("tabs-testing","Testaus");
 
 enableTab("tabs-main");
